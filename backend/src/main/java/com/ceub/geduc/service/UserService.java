@@ -9,13 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.ceub.geduc.dto.TagDTO;
 import com.ceub.geduc.dto.UserDTO;
 import com.ceub.geduc.dto.UserInsertDTO;
-import com.ceub.geduc.entities.Tag;
 import com.ceub.geduc.entities.User;
-import com.ceub.geduc.repository.TagRepository;
 import com.ceub.geduc.repository.UserRepository;
+import com.ceub.geduc.service.converter.UserConverter;
 
 import javax.transaction.Transactional;
 
@@ -28,30 +26,15 @@ public class UserService implements UserDetailsService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private TagRepository tagRepository;
-	
-	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Transactional
 	public UserDTO insert(UserInsertDTO req) {
 		User entity = new User();
-		copyDtoToEntity(req, entity);
+		UserConverter.copyDtoToEntity(req, entity);
 		entity.setPassword(passwordEncoder.encode(req.getPassword()));
 		entity = userRepository.save(entity);
 		return new UserDTO(entity);
-	}
-	
-	private void copyDtoToEntity(UserDTO dto, User entity) {
-		entity.setRegistration(dto.getRegistration());
-		entity.setEmail(dto.getEmail());
-		entity.setFullName(dto.getFullName());
-		
-		entity.getTags().clear();
-		for (TagDTO tag: dto.getTags()) {
-			Tag role = tagRepository.getById(tag.getTagId());
-			entity.getTags().add(role);
-		}
 	}
 	
 	@Override

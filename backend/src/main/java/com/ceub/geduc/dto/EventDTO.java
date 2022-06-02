@@ -2,10 +2,11 @@ package com.ceub.geduc.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.web.multipart.MultipartFile;
 import com.ceub.geduc.entities.Tag;
 import com.ceub.geduc.entities.User;
 
@@ -25,10 +26,10 @@ public class EventDTO implements Serializable {
 	private Long eventId;
 	private String title;
 	private String description;
-	private Date date;
-	private LocalDate startTime;
-	private LocalDate endTime;
+	private LocalDate creationDate;
+	private LocalTime duration;
 	private User registration;
 	private Set<Tag> tags = new HashSet<>();
 	private Set<User> users = new HashSet<>();
+	private Set<MultipartFile> files = new HashSet<>();
 }

@@ -2,7 +2,7 @@ package com.ceub.geduc.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -38,9 +38,8 @@ public class Event implements Serializable {
 	private Long eventId;
 	private String title;
 	private String description;
-	private Date date;
-	private LocalDate startTime;
-	private LocalDate endTime;
+	private LocalDate creationDate;
+	private LocalTime duration;
 	
 	@ManyToOne
 	@JoinColumn(name = "registration")
@@ -61,6 +60,14 @@ public class Event implements Serializable {
 			inverseJoinColumns = @JoinColumn(name = "registration")
 			)
 	private Set<User> users = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name = "eventFiles",
+			joinColumns = @JoinColumn(name = "eventId"),
+			inverseJoinColumns = @JoinColumn(name = "fileId")
+			)
+	private Set<File> files = new HashSet<>();
 	
 	@Override
 	public int hashCode() {
