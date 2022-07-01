@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { TelaLoginComponent } from './tela-login/tela-login.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
