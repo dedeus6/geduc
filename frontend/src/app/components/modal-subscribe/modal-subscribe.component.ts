@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-modal-subscribe',
@@ -8,7 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ModalSubscribeComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    protected dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
