@@ -5,16 +5,26 @@ import { AppComponent } from './app.component';
 import { TelaLoginComponent } from './tela-login/tela-login.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
+import { HeaderComponent } from './components/header/header.component';
+import { MatIconModule } from '@angular/material/icon';
+import { HomePageComponent } from './home-page/home-page.component';
+import { MatButtonModule } from '@angular/material/button';
+import { CardEventComponent } from './components/card-event/card-event.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TelaLoginComponent
+    TelaLoginComponent,
+    HeaderComponent,
+    HomePageComponent,
+    CardEventComponent
   ],
   imports: [
     BrowserModule,
     NoopAnimationsModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
