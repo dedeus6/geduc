@@ -1,24 +1,31 @@
 <section class="container">
     <div id="imagem-login">
-        <img src="/assets/computador-estudante.jpg" alt="Computador e Estudante">
+        <img src="/assets/computador-estudante.svg" alt="Computador e Estudante">
     </div>
     <div class="container-campos">
-        <div id="">
+        <div class="info-login">
             <h3>Bem vindo</h3>
             <h1>Faça login na sua conta</h1>
-            
-            <form class="">
-                <mat-form-field class="" appearance="fill">
+        </div>
+        
+        <div class="container-inputs">
+            <div>
+                <mat-form-field class="campo-email" appearance="fill">
                     <mat-label>Email</mat-label>
                     <input matInput type="text">
                 </mat-form-field>
-                
-                <mat-form-field class="" appearance="fill">
+            </div>
+            <div>
+                <mat-form-field class="campo-senha" appearance="fill">
                     <mat-label>Senha</mat-label>
                     <input matInput type="text">
                 </mat-form-field>
-            </form>
-
+            </div>
+            <div>
+                <p>*Lembre-se de utilizar seu email institucional</p>
+                <button mat-flat-button color="primary" id="botao-entrar">ENTRAR</button>
+                <button mat-stroked-button color="primary" id="botao-cadastrar">CADASTRAR</button>
+            </div>
         </div>
     </div>
 </section>
