@@ -11,7 +11,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CardEventComponent } from './components/card-event/card-event.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subscribe.component'; 
+import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subscribe.component';
 
 @NgModule({
   declarations: [
