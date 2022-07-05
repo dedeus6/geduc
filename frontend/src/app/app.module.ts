@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MatButtonModule } from '@angular/material/button';
 import { CardEventComponent } from './components/card-event/card-event.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subscribe.component'; 
 
 @NgModule({
   declarations: [
@@ -17,14 +19,16 @@ import { CardEventComponent } from './components/card-event/card-event.component
     TelaLoginComponent,
     HeaderComponent,
     HomePageComponent,
-    CardEventComponent
+    CardEventComponent,
+    ModalSubscribeComponent
   ],
   imports: [
     BrowserModule,
     NoopAnimationsModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
