@@ -5,11 +5,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './tela-login.component.html',
   styleUrls: ['./tela-login.component.sass']
 })
-export class TelaLoginComponent implements OnInit {
+export class TelaLoginComponent {
+  telaLogin: boolean = true;
+  telaCadastro: boolean;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  abrirTelaCadastro(){
+      this.telaCadastro = true;
+      this.telaLogin = false;
   }
 
 }

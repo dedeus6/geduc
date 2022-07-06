@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CardEventComponent } from './components/card-event/card-event.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subscribe.component';
+import { TelaCadastroComponent } from './components/tela-cadastro/tela-cadastro.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subs
     HeaderComponent,
     HomePageComponent,
     CardEventComponent,
-    ModalSubscribeComponent
+    ModalSubscribeComponent,
+    TelaCadastroComponent
   ],
   imports: [
     BrowserModule,

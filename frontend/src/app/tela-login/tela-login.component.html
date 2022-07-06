@@ -2,7 +2,7 @@
     <div id="imagem-login">
         <img src="/assets/computador-estudante.svg" alt="Computador e Estudante">
     </div>
-    <div class="container-campos">
+    <div class="container-campos" *ngIf="telaLogin">
         <div class="info-login">
             <h3>Bem vindo</h3>
             <h1>Faça login na sua conta</h1>
@@ -24,8 +24,11 @@
             <div>
                 <p>*Lembre-se de utilizar seu email institucional</p>
                 <button mat-flat-button color="primary" id="botao-entrar">ENTRAR</button>
-                <button mat-stroked-button color="primary" id="botao-cadastrar">CADASTRAR</button>
+                <button mat-stroked-button color="primary" id="botao-cadastrar" (click)="abrirTelaCadastro()">CADASTRAR</button>
             </div>
-        </div>
+        </div> 
+    </div>
+    <div class="container-campos" *ngIf="telaCadastro">
+        <app-tela-cadastro></app-tela-cadastro>
     </div>
 </section>
