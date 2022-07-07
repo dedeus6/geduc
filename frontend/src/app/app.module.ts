@@ -17,6 +17,11 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { MatListModule } from '@angular/material/list';
 import { TelaCadastroComponent } from './components/tela-cadastro/tela-cadastro.component';
 import { TelaLoginComponent } from './components/tela-login/tela-login.component';
+import { CertificatesComponent } from './components/profile/certificates/certificates.component';
+import { ContentComponent } from './components/profile/content/content.component';
+import { CertificateCardComponent } from './components/profile/certificates/certificate-card/certificate-card.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips'; 
 
 @NgModule({
   declarations: [
@@ -28,7 +33,10 @@ import { TelaLoginComponent } from './components/tela-login/tela-login.component
     ModalSubscribeComponent,
     ProfilePageComponent,
     TelaCadastroComponent,
-    TelaLoginComponent
+    TelaLoginComponent,
+    ContentComponent,
+    CertificatesComponent,
+    CertificateCardComponent
   
   ],
   imports: [
@@ -39,7 +47,9 @@ import { TelaLoginComponent } from './components/tela-login/tela-login.component
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
-    MatListModule
+    MatListModule,
+    MatCardModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

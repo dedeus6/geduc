@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuModel } from '../models/MenuModel';
 
 @Component({
@@ -11,11 +12,13 @@ export class ProfilePageComponent implements OnInit {
   menuItems: Array<MenuModel> = [
     {
       name: 'Perfil',
-      icon: 'person'
+      icon: 'person',
+      path: 'personal'
     },
     {
       name: 'Certificados',
-      icon: 'beenhere'
+      icon: 'beenhere',
+      path: 'certificates'
     },
     {
       name: 'Sair',
@@ -23,7 +26,9 @@ export class ProfilePageComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }

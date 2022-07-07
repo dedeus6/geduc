@@ -1,13 +1,17 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { CertificatesComponent } from "./components/profile/certificates/certificates.component";
+import { ContentComponent } from "./components/profile/content/content.component";
 import { TelaCadastroComponent } from "./components/tela-cadastro/tela-cadastro.component";
 import { TelaLoginComponent } from "./components/tela-login/tela-login.component";
 import { HomePageComponent } from "./home-page/home-page.component";
+import { ProfilePageComponent } from "./profile-page/profile-page.component";
 
 const routes: Routes = [
     {
         path: "",
-        component: TelaLoginComponent
+        pathMatch: "full",
+        redirectTo: "home"
     },
     {
         path: "cadastro",
@@ -16,6 +20,20 @@ const routes: Routes = [
     {
         path: "home",
         component: HomePageComponent
+    },
+    {
+        path: "profile",
+        component: ProfilePageComponent,
+        children: [
+            {
+                path: "personal",
+                component: ContentComponent
+            },
+            {
+                path: "certificates",
+                component: CertificatesComponent
+            }
+        ]
     }
 ];
 
