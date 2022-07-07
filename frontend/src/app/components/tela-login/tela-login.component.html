@@ -2,11 +2,12 @@
     <div id="imagem-login">
         <img src="/assets/computador-estudante.svg" alt="Computador e Estudante">
     </div>
-
+    
     <div class="container-campos">
         <div class="info-login">
-            <h1>Cadastre sua conta</h1>
-        </div>     
+            <h3>Bem vindo</h3>
+            <h1>Faça login na sua conta</h1>
+        </div>
         
         <div class="container-inputs">
             <div>
@@ -22,14 +23,9 @@
                 </mat-form-field>
             </div>
             <div>
-                <mat-form-field class="campo-senha" appearance="fill">
-                    <mat-label>Confirme sua senha</mat-label>
-                    <input matInput type="text">
-                </mat-form-field>
-            </div>
-            <div>
                 <p>*Lembre-se de utilizar seu email institucional</p>
-                <button mat-flat-button color="primary" id="botao-entrar" (click)="abrirTelaLogin()" routerLink="/">CADASTRE-SE</button>
+                <button mat-flat-button color="primary" id="botao-entrar" routerLink="home">ENTRAR</button>
+                <button mat-stroked-button color="primary" id="botao-cadastrar" (click)="abrirTelaCadastro()" routerLink="/cadastro">CADASTRAR</button>
             </div>
         </div> 
     </div>

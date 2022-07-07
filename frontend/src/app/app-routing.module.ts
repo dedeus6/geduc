@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { TelaCadastroComponent } from "./components/tela-cadastro/tela-cadastro.component";
-import { TelaLoginComponent } from "./tela-login/tela-login.component";
+import { TelaLoginComponent } from "./components/tela-login/tela-login.component";
+import { HomePageComponent } from "./home-page/home-page.component";
 
 const routes: Routes = [
     {
@@ -11,6 +12,10 @@ const routes: Routes = [
     {
         path: "cadastro",
         component: TelaCadastroComponent
+    },
+    {
+        path: "home",
+        component: HomePageComponent
     }
 ];
 
