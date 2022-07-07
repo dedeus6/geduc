@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tela-cadastro.component.sass']
 })
 export class TelaCadastroComponent implements OnInit {
-
+  telaCadastro: boolean = true;
+  telaLogin: boolean = false;
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  abrirTelaLogin(){
+    this.telaLogin = true;
+    this.telaCadastro = false;
+  }
 }

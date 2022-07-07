@@ -1,1 +1,36 @@
-<p>tela-cadastro works!</p>
+<section class="container">
+    <div class="container-campos" *ngIf="telaCadastro">
+        <div class="info-login">
+            <h1>Cadastre sua conta</h1>
+        </div>     
+        
+        <div class="container-inputs">
+            <div>
+                <mat-form-field class="campo-email" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="campo-senha" appearance="fill">
+                    <mat-label>Senha</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field class="campo-senha" appearance="fill">
+                    <mat-label>Confirme sua senha</mat-label>
+                    <input matInput type="text">
+                </mat-form-field>
+            </div>
+            <div>
+                <p>*Lembre-se de utilizar seu email institucional</p>
+                <button mat-flat-button color="primary" id="botao-entrar" (click)="abrirTelaLogin()" rou>CADASTRE-SE</button>
+            </div>
+        </div> 
+    </div>
+    <!-- <div class="container-campos" *ngIf="telaLogin" >
+        <router-outlet></router-outlet>
+    </div> -->
+
+</section>
