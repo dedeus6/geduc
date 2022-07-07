@@ -12,6 +12,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { CardEventComponent } from './components/card-event/card-event.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subscribe.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subs
     HeaderComponent,
     HomePageComponent,
     CardEventComponent,
-    ModalSubscribeComponent
+    ModalSubscribeComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { ModalSubscribeComponent } from './components/modal-subscribe/modal-subs
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
