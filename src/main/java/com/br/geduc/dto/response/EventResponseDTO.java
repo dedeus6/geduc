@@ -1,0 +1,21 @@
+package com.br.geduc.dto.response;
+
+import com.br.geduc.dto.enums.EventStatusEnum;
+import lombok.*;
+
+import java.util.Set;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class EventResponseDTO {
+    private String eventNumber;
+    private String title;
+    private String description;
+    private String creatorRegistration;
+    private String start;
+    private String end;
+    private EventStatusEnum status;
+    private Set<String> techs;
+}
