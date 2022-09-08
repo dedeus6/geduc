@@ -6,6 +6,6 @@ spring:
     name: geduc
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb+srv://admin:YdyCoqcVS9fqI7j5@cluster0.bylgp.mongodb.net/?retryWrites=true&w=majority}
+      uri: ${MONGODB_URI:mongodb+srv://admin:admin@cluster0.0lnyvmd.mongodb.net/?retryWrites=true&w=majority}
       port: 27017
       database: geduc
