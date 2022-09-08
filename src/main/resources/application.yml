@@ -6,5 +6,5 @@ spring:
     name: geduc
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb+srv://admin:admin@cluster0.tasilyu.mongodb.net/?retryWrites=true&w=majority&ssl=true}
+      uri: ${MONGODB_URI:mongodb+srv://admin:admin@cluster0.tasilyu.mongodb.net/}
       database: geduc
