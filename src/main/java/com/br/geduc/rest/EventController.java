@@ -1,12 +1,9 @@
 package com.br.geduc.rest;
 
-import com.br.geduc.dto.enums.EventStatusEnum;
 import com.br.geduc.dto.request.EventRequestDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
 import com.br.geduc.service.EventService;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-import java.util.List;
-
-import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 

@@ -2,7 +2,6 @@ package com.br.geduc.exceptions;
 
 import com.br.geduc.exceptions.model.ExceptionFieldError;
 import com.br.geduc.exceptions.model.ExceptionResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;

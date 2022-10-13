@@ -43,7 +43,7 @@ public class UserController {
     public UserResponseDTO getUser(@Valid
                                    @NotBlank(message = Errors.REGISTRATION_IS_REQUIRED)
                                    @PathVariable("registration") String registration) {
-        return this.userService.getUserByRegistration(registration);
+        return this.userService.getUser(registration);
     }
 
 }

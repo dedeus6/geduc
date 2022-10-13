@@ -48,6 +48,10 @@ public class UserService {
     }
 
     public UserResponseDTO getUserByRegistration(String registration) {
+        return userRepository.findByRegistration(registration);
+    }
+
+    public UserResponseDTO getUser(String registration) {
         var user = userRepository.findByRegistration(registration);
         if (Objects.isNull(user))
             throw new BusinessException(USER_NOT_EXIST);

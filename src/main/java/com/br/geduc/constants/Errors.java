@@ -17,8 +17,10 @@ public class Errors {
     public static final String PASSWORD_IS_REQUIRED = "Password is required";
     public static final String TITLE_IS_REQUIRED = "Title is required";
     public static final String DESCRIPTION_IS_REQUIRED = "Description is required";
-    public static final String START_IS_REQUIRED = "Start time is required";
-    public static final String END_IS_REQUIRED = "End time is required";
+    public static final String DURATION_IS_REQUIRED = "Duration is required";
     public static final String EVENT_NUMER_IS_NON_REQUIRED = "Event number must be null";
     public static final String EVENT_STATUS_IS_NON_REQUIRED = "Event status must be null";
+    public static final String FILE_LIST_IS_EMPTY = "File list is empty";
+    public static final String FILE_ID_IS_REQUIRED = "File id is required";
+    public static final String AZURE_ERROR = "When trying to save the %s file it gave the following error: %s";
 }

@@ -15,7 +15,7 @@ public class BusinessException extends RuntimeException {
         this.status = UNPROCESSABLE_ENTITY;
     }
 
-    private String error;
-    private HttpStatus status;
+    private final String error;
+    private final HttpStatus status;
 
 }

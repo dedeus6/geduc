@@ -1,7 +1,5 @@
 package com.br.geduc.service;
 
-import com.br.geduc.document.EventDocument;
-import com.br.geduc.dto.enums.EventStatusEnum;
 import com.br.geduc.dto.request.EventRequestDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
 import com.br.geduc.mapper.EventMapper;
@@ -10,10 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
 
@@ -38,8 +32,7 @@ public class EventService {
                 .title(event.getTitle())
                 .description(event.getDescription())
                 .creatorRegistration(event.getCreatorRegistration())
-                .start(event.getStart())
-                .end(event.getEnd())
+                .duration(event.getDuration())
                 .status(event.getStatus())
                 .techs(event.getTechs())
                 .build());
