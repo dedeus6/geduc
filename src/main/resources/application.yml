@@ -2,14 +2,16 @@ server:
   port: 8080
 
 spring:
+  profiles:
+    active: ${APP_PROFILE:dev}
   application:
     name: geduc
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb+srv://admin:admin@cluster0.0lnyvmd.mongodb.net/?retryWrites=true&w=majority}
+      uri: ${MONGODB_URI}
       port: 27017
       database: geduc
     azure:
-      container: geduc
-      connection-string: https://geduc.blob.core.windows.net/
-      token: ?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2022-10-14T05:54:49Z&st=2022-10-13T21:54:49Z&spr=https&sig=cppvDV8dUEgbZjcg0%2BuUmLg5huzvQgyd3jzbhRzaTg4%3D
+      container: ${AZURE_CONTAINER}
+      connection-string: ${AZURE_CONNECTION_STRING}
+      token: ${AZURE_TOKEN}
