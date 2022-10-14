@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.apache.tomcat.util.http.fileupload.FileUploadBase.MULTIPART_FORM_DATA;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +23,12 @@ public class StorageController {
     @ResponseStatus(CREATED)
     public StorageResponseDTO upload(@RequestParam List<MultipartFile> files) {
         return service.uploadFiles(files);
+    }
+
+    @GetMapping("/{filesId}")
+    @ResponseStatus(OK)
+    public StorageResponseDTO getById(@PathVariable String filesId) {
+        return service.getEventFiles(filesId);
     }
 
 }

@@ -12,4 +12,4 @@ spring:
     azure:
       container: geduc
       connection-string: https://geduc.blob.core.windows.net/
-      token: ?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2022-10-14T05:54:49Z&st=2022-10-13T21:54:49Z&spr=https&sig=cppvDV8dUEgbZjcg0%2BuUmLg5huzvQgyd3jzbhRzaTg4%3D
+      token: sp=racwdli&st=2022-10-14T19:41:11Z&se=2024-01-01T03:41:11Z&sv=2021-06-08&sr=c&sig=mJLkdTBTOys10OkjdsDzDcTsIQsanVLyy%2FJ7Kj%2BzduE%3D

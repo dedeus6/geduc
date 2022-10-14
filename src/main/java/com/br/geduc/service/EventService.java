@@ -19,8 +19,11 @@ public class EventService {
 
     private EventMapper eventMapper;
 
+    private StorageService storageService;
+
     public void createEvent(EventRequestDTO event) {
         event.setStatus(PENDING);
+        storageService.findEventFiles(event.getFilesId());
         var enventDocument = eventMapper.toDocument(event);
         eventRepository.save(enventDocument);
     }

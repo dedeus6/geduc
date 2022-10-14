@@ -5,6 +5,7 @@ import com.br.geduc.mapper.UserMapper;
 import com.br.geduc.repository.EventRepository;
 import com.br.geduc.repository.UserRepository;
 import com.br.geduc.service.EventService;
+import com.br.geduc.service.StorageService;
 import com.br.geduc.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -22,10 +23,11 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public EventService eventService(EventRepository eventRepository) {
+    public EventService eventService(EventRepository eventRepository, StorageService storageService) {
         return new EventService(
                 eventRepository,
-                new EventMapper(new ModelMapper())
+                new EventMapper(new ModelMapper()),
+                storageService
         );
     }
 
