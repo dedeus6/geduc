@@ -4,6 +4,7 @@ package com.br.geduc.rest;
 import com.br.geduc.constants.Errors;
 import com.br.geduc.dto.request.UserAuthRequestDTO;
 import com.br.geduc.dto.request.UserRequestDTO;
+import com.br.geduc.dto.request.UserUpdateRequestDTO;
 import com.br.geduc.dto.response.UserResponseDTO;
 import com.br.geduc.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,13 @@ public class UserController {
                                    @NotBlank(message = Errors.REGISTRATION_IS_REQUIRED)
                                    @PathVariable("registration") String registration) {
         return this.userService.getUser(registration);
+    }
+
+    @PutMapping(path = "/update/{registration}")
+    @ResponseStatus(OK)
+    public UserResponseDTO updateUser(@PathVariable("registration") String registration,
+                                      @Valid @RequestBody UserUpdateRequestDTO user) {
+        return userService.updateUser(registration, user);
     }
 
 }

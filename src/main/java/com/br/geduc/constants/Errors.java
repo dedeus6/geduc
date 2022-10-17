@@ -24,5 +24,6 @@ public class Errors {
     public static final String FILE_ID_IS_REQUIRED = "File id is required";
     public static final String FILE_ID_NOT_EXISTS = "File id not exists";
     public static final String UPLOAD_NOT_FINISHED = "Files upload not finished";
+    public static final String TAGS_IS_REQUIRED = "List tags is required";
     public static final String AZURE_ERROR = "When trying to save the %s file it gave the following error: %s";
 }

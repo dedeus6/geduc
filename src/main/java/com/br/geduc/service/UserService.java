@@ -1,7 +1,9 @@
 package com.br.geduc.service;
 
+import com.br.geduc.document.UserDocument;
 import com.br.geduc.dto.request.UserAuthRequestDTO;
 import com.br.geduc.dto.request.UserRequestDTO;
+import com.br.geduc.dto.request.UserUpdateRequestDTO;
 import com.br.geduc.dto.response.UserResponseDTO;
 import com.br.geduc.exceptions.BusinessException;
 import com.br.geduc.mapper.UserMapper;
@@ -49,6 +51,27 @@ public class UserService {
 
     public UserResponseDTO getUserByRegistration(String registration) {
         return userRepository.findByRegistration(registration);
+    }
+
+    public UserResponseDTO updateUser(String registration, UserUpdateRequestDTO request) {
+        var oldUser = getUserByRegistration(registration);
+
+        if (Objects.isNull(oldUser))
+            throw new BusinessException(USER_NOT_EXIST);
+
+        var userDocument = UserDocument.builder()
+                .id(oldUser.getId())
+                .registration(oldUser.getRegistration())
+                .name(oldUser.getName())
+                .password(oldUser.getPassword())
+                .email(oldUser.getEmail())
+                .isAdmin(oldUser.getIsAdmin())
+                .techs(request.getTechs())
+                .build();
+
+        var newUser = userRepository.save(userDocument);
+
+        return userMapper.toResponse(newUser);
     }
 
     public UserResponseDTO getUser(String registration) {
