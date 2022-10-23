@@ -31,7 +31,7 @@ public class EventService {
     public Page<EventResponseDTO> listEvents(Pageable pageable) {
         var events = eventRepository.findAll(pageable);
         return events.map(event -> EventResponseDTO.builder()
-                .eventNumber(event.getEventNumber().toString())
+                .eventNumber(event.getEventNumber())
                 .title(event.getTitle())
                 .description(event.getDescription())
                 .creatorRegistration(event.getCreatorRegistration())

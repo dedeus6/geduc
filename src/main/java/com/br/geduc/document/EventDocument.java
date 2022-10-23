@@ -19,7 +19,7 @@ import java.util.UUID;
 public class EventDocument {
     @Field("eventNumber")
     @Builder.Default
-    private UUID eventNumber = UUID.randomUUID();
+    private String eventNumber = UUID.randomUUID().toString();
 
     @Field("title")
     private String title;
