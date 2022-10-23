@@ -10,6 +10,7 @@ import com.br.geduc.mapper.FileMapper;
 import com.br.geduc.repository.StorageRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,6 +43,44 @@ public class StorageService {
         return StorageResponseDTO.builder()
                 .filesId(document.getId())
                 .build();
+    }
+    public StorageResponseDTO updateFiles(String filesId, List<MultipartFile> files) {
+        if (files.isEmpty())
+            throw new BusinessException(FILE_LIST_IS_EMPTY);
+
+        var document = findEventFiles(filesId);
+        asyncUploadFiles(files, document);
+        return StorageResponseDTO.builder()
+                .filesId(document.getId())
+                .build();
+    }
+
+    public void deleteFiles(String filesId, String azureId) {
+        var document = findEventFiles(filesId);
+
+        if (Objects.isNull(document.getFinalUploadDate()))
+            throw new BusinessException(UPLOAD_NOT_FINISHED);
+
+        asyncDeleteFiles(document, azureId);
+    }
+
+    @Async
+    private void asyncDeleteFiles(StorageFileDocument document, String azureId) {
+        if (Objects.isNull(azureId)) {
+            document.getFiles().forEach(file -> {
+                deleteFileOnAzure(file.getAzureId());
+            });
+
+            document.setFiles(List.of());
+        } else {
+            deleteFileOnAzure(azureId);
+            var newList = document.getFiles().stream().filter(item -> !item.getAzureId().equals(azureId))
+                            .collect(Collectors.toList());
+
+            document.setFiles(newList);
+        }
+
+        storageRepository.save(document);
     }
 
     @Async
@@ -99,6 +138,12 @@ public class StorageService {
             log.error(format(AZURE_ERROR, file.getOriginalFilename(), e.getMessage()));
         }
         return null;
+    }
+
+    private void deleteFileOnAzure(String azureId) {
+        blobClient.blobName(azureId)
+                .buildClient()
+                .deleteIfExists();
     }
 
     public StorageFileDocument findEventFiles(String filesId) {

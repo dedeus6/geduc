@@ -25,10 +25,22 @@ public class StorageController {
         return service.uploadFiles(files);
     }
 
+    @PutMapping(value = "/{filesId}", consumes = MULTIPART_FORM_DATA)
+    @ResponseStatus(CREATED)
+    public StorageResponseDTO update(@PathVariable String filesId, @RequestParam List<MultipartFile> files) {
+        return service.updateFiles(filesId, files);
+    }
+
     @GetMapping("/{filesId}")
     @ResponseStatus(OK)
     public StorageResponseDTO getById(@PathVariable String filesId) {
         return service.getEventFiles(filesId);
+    }
+
+    @DeleteMapping("/{filesId}")
+    @ResponseStatus(OK)
+    public void deleteFiles(@PathVariable String filesId, @RequestParam(required = false) String azureId) {
+        service.deleteFiles(filesId, azureId);
     }
 
 }
