@@ -22,6 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/v1/user")
 @Validated
+@CrossOrigin("*")
 public class UserController {
 
     @Autowired
