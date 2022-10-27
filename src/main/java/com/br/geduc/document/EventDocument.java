@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -17,6 +18,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @Document(collection = "events")
 public class EventDocument {
+
+    @Id
     @Field("eventNumber")
     @Builder.Default
     private String eventNumber = UUID.randomUUID().toString();
