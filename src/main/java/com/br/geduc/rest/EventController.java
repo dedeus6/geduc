@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.OK;
 @RestController
 @RequestMapping("/v1/event")
 @Validated
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class EventController {
 
     @Autowired
