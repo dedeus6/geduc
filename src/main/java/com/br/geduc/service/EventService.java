@@ -40,6 +40,7 @@ public class EventService {
             throw new BusinessException(EVENT_NOT_EXISTS);
 
         event.setEventNumber(eventNumber);
+        event.setStatus(eventDocument.get().getStatus());
         var updatedEvent = eventMapper.toDocument(event);
         eventRepository.save(updatedEvent);
 
@@ -55,6 +56,7 @@ public class EventService {
                 .creatorRegistration(event.getCreatorRegistration())
                 .duration(event.getDuration())
                 .status(event.getStatus())
+                .filesId(event.getFilesId())
                 .techs(event.getTechs())
                 .build());
     }

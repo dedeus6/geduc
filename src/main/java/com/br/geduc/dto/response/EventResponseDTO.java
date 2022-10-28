@@ -16,5 +16,6 @@ public class EventResponseDTO {
     private String creatorRegistration;
     private String duration;
     private EventStatusEnum status;
+    private String filesId;
     private Set<String> techs;
 }
