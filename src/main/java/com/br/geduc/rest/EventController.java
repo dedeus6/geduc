@@ -5,12 +5,11 @@ import com.br.geduc.dto.response.EventResponseDTO;
 import com.br.geduc.service.EventService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -33,8 +32,12 @@ public class EventController {
 
     @GetMapping
     @ResponseStatus(OK)
-    public Page<EventResponseDTO> listEvents(Pageable pageable) {
-        return eventService.listEvents(pageable);
+    public List<EventResponseDTO> listEvents(
+            @RequestParam(required = false) String creatorRegistration,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) List<String> techs) {
+        return eventService.listEvents(creatorRegistration, status, title, techs);
     }
 
     @PutMapping(value = "/{eventNumber}")

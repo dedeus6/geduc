@@ -8,10 +8,10 @@ import com.br.geduc.mapper.EventMapper;
 import com.br.geduc.repository.EventRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.br.geduc.constants.Errors.EVENT_NOT_EXISTS;
 import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
@@ -47,18 +47,10 @@ public class EventService {
         return eventMapper.toResponse(updatedEvent);
     }
 
-    public Page<EventResponseDTO> listEvents(Pageable pageable) {
-        var events = eventRepository.findAll(pageable);
-        return events.map(event -> EventResponseDTO.builder()
-                .eventNumber(event.getEventNumber())
-                .title(event.getTitle())
-                .description(event.getDescription())
-                .creatorRegistration(event.getCreatorRegistration())
-                .duration(event.getDuration())
-                .status(event.getStatus())
-                .filesId(event.getFilesId())
-                .techs(event.getTechs())
-                .build());
+    public List<EventResponseDTO> listEvents(String creatorRegistration, String status, String title, List<String> techs) {
+        var events = eventRepository.findEvents(creatorRegistration, status, title, techs);
+
+        return events.stream().map(event -> eventMapper.toResponse(event)).collect(Collectors.toList());
     }
 
     private Optional<EventDocument> getEventByEventNumber(String eventNumber) {
