@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: geduc
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   data:
     mongodb:
       uri: mongodb+srv://admin:admin@cluster0.0lnyvmd.mongodb.net/?retryWrites=true&w=majority
