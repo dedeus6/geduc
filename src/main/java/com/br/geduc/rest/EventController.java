@@ -33,11 +33,12 @@ public class EventController {
     @GetMapping
     @ResponseStatus(OK)
     public List<EventResponseDTO> listEvents(
+            @RequestParam(required = false) String eventNumber,
             @RequestParam(required = false) String creatorRegistration,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) List<String> techs) {
-        return eventService.listEvents(creatorRegistration, status, title, techs);
+        return eventService.listEvents(eventNumber, creatorRegistration, status, title, techs);
     }
 
     @PutMapping(value = "/{eventNumber}")

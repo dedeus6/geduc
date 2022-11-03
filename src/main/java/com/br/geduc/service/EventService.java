@@ -47,8 +47,8 @@ public class EventService {
         return eventMapper.toResponse(updatedEvent);
     }
 
-    public List<EventResponseDTO> listEvents(String creatorRegistration, String status, String title, List<String> techs) {
-        var events = eventRepository.findEvents(creatorRegistration, status, title, techs);
+    public List<EventResponseDTO> listEvents(String eventNumber, String creatorRegistration, String status, String title, List<String> techs) {
+        var events = eventRepository.findEvents(eventNumber, creatorRegistration, status, title, techs);
 
         return events.stream().map(event -> eventMapper.toResponse(event)).collect(Collectors.toList());
     }

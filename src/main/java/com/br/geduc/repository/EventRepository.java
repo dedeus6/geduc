@@ -18,8 +18,11 @@ public interface EventRepository extends MongoRepository<EventDocument, String> 
 
     List<EventDocument> findEventsByStatus(EventStatusEnum status);
 
-    default List<EventDocument> findEvents(String creatorRegistration, String status, String title, List<String> techs) {
+    default List<EventDocument> findEvents(String eventNumber, String creatorRegistration, String status, String title, List<String> techs) {
         Criteria criteria = new Criteria();
+
+        if (Objects.nonNull(eventNumber))
+            criteria = criteria.and("eventNumber").is(eventNumber);
 
         if (Objects.nonNull(status))
             criteria = criteria.and("status").is(status);
