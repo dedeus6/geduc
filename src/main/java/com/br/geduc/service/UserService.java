@@ -7,6 +7,7 @@ import com.br.geduc.dto.request.UserUpdateRequestDTO;
 import com.br.geduc.dto.response.UserResponseDTO;
 import com.br.geduc.exceptions.BusinessException;
 import com.br.geduc.mapper.UserMapper;
+import com.br.geduc.repository.SubscriberRepository;
 import com.br.geduc.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,8 @@ public class UserService {
     private UserRepository userRepository;
 
     private UserMapper userMapper;
+
+    private SubscriberRepository subscriberRepository;
 
     public void createUser(UserRequestDTO user) {
         var userByRegistration = getUserByRegistration(user.getRegistration());
@@ -51,6 +54,13 @@ public class UserService {
 
     public UserResponseDTO getUserByRegistration(String registration) {
         return userRepository.findByRegistration(registration);
+    }
+
+    protected void validateIfUserAlreadySubscribeInEvent(String eventNumber, String registration) {
+        var document = subscriberRepository.findByEventNumberAndRegistration(eventNumber, registration);
+
+        if (Objects.nonNull(document))
+            throw new BusinessException(USER_ALREADY_SUBSCRIBE);
     }
 
     public UserResponseDTO updateUser(String registration, UserUpdateRequestDTO request) {

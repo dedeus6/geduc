@@ -1,19 +1,27 @@
 package com.br.geduc.service;
 
 import com.br.geduc.document.EventDocument;
+import com.br.geduc.document.SubscribeDocument;
 import com.br.geduc.dto.request.EventRequestDTO;
+import com.br.geduc.dto.request.SubscribeEventDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
 import com.br.geduc.exceptions.BusinessException;
 import com.br.geduc.mapper.EventMapper;
+import com.br.geduc.mapper.SubscribeMapper;
 import com.br.geduc.repository.EventRepository;
+import com.br.geduc.repository.SubscriberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.br.geduc.constants.Errors.EVENT_NOT_EXISTS;
+import static com.br.geduc.constants.Errors.USER_NOT_EXIST;
 import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
 
 @AllArgsConstructor
@@ -26,11 +34,46 @@ public class EventService {
 
     private StorageService storageService;
 
+    private UserService userService;
+
+    private SubscriberRepository subscriberRepository;
+
+    private SubscribeMapper subscribeMapper;
+
     public void createEvent(EventRequestDTO event) {
         event.setStatus(PENDING);
         storageService.findEventFiles(event.getFilesId());
         var enventDocument = eventMapper.toDocument(event);
         eventRepository.save(enventDocument);
+    }
+
+    public void subscribeEvent(SubscribeEventDTO subscriber) {
+        var event = getEventByEventNumber(subscriber.getEventNumber());
+        var user = userService.getUserByRegistration(subscriber.getRegistration());
+
+        if (event.isEmpty()) {
+            throw new BusinessException(EVENT_NOT_EXISTS);
+        }
+
+        if (Objects.isNull(user)) {
+            throw new BusinessException(USER_NOT_EXIST);
+        }
+
+        userService.validateIfUserAlreadySubscribeInEvent(subscriber.getEventNumber(), subscriber.getRegistration());
+
+        subscriberRepository.save(subscribeMapper.toDocument(subscriber));
+    }
+
+    public List<EventResponseDTO> listEventsSubscribed(String registration) {
+        var documentList = findSubscribeByRegistration(registration);
+        var events = new ArrayList<EventResponseDTO>();
+
+        documentList.forEach(subscribe -> {
+            var event = getEventByEventNumber(subscribe.getEventNumber());
+            event.ifPresent(eventDocument -> events.add(eventMapper.toResponse(eventDocument)));
+        });
+
+        return events;
     }
 
     public EventResponseDTO updateEvent(String eventNumber, EventRequestDTO event) {
@@ -55,5 +98,9 @@ public class EventService {
 
     private Optional<EventDocument> getEventByEventNumber(String eventNumber) {
         return eventRepository.findById(eventNumber);
+    }
+
+    private List<SubscribeDocument> findSubscribeByRegistration(String registration) {
+        return subscriberRepository.findByRegistration(registration);
     }
 }

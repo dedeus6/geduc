@@ -1,6 +1,7 @@
 package com.br.geduc.rest;
 
 import com.br.geduc.dto.request.EventRequestDTO;
+import com.br.geduc.dto.request.SubscribeEventDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
 import com.br.geduc.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -47,4 +48,15 @@ public class EventController {
         return eventService.updateEvent(eventNumber, event);
     }
 
+    @PostMapping(value = "/subscribe")
+    @ResponseStatus(CREATED)
+    public void subscribeEvent(@Valid @RequestBody SubscribeEventDTO subscriber) {
+        eventService.subscribeEvent(subscriber);
+    }
+
+    @GetMapping(value = "/subscribed/{registration}")
+    @ResponseStatus(OK)
+    public List<EventResponseDTO> listEventsSubscribed(@PathVariable("registration") String registration) {
+        return eventService.listEventsSubscribed(registration);
+    }
 }

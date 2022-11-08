@@ -15,7 +15,6 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 public class StorageResponseDTO {
 
     private String filesId;
-
     @JsonInclude(NON_NULL)
     private LocalDateTime createdDate;
 
@@ -25,3 +24,4 @@ public class StorageResponseDTO {
     @JsonInclude(NON_NULL)
     private List<FileResponseDTO> files;
 }
+
