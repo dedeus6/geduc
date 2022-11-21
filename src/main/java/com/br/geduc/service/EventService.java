@@ -2,6 +2,7 @@ package com.br.geduc.service;
 
 import com.br.geduc.document.EventDocument;
 import com.br.geduc.document.SubscribeDocument;
+import com.br.geduc.dto.enums.NotificationTypeEnum;
 import com.br.geduc.dto.request.EventRequestDTO;
 import com.br.geduc.dto.request.SubscribeEventDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
@@ -23,6 +24,8 @@ import java.util.stream.Collectors;
 import static com.br.geduc.constants.Errors.EVENT_NOT_EXISTS;
 import static com.br.geduc.constants.Errors.USER_NOT_EXIST;
 import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
+import static com.br.geduc.dto.enums.NotificationTypeEnum.CREATE_EVENT;
+import static com.br.geduc.dto.enums.NotificationTypeEnum.SUBSCRIBE_EVENT;
 
 @AllArgsConstructor
 @Slf4j
@@ -36,6 +39,8 @@ public class EventService {
 
     private UserService userService;
 
+    private NotificationService notificationService;
+
     private SubscriberRepository subscriberRepository;
 
     private SubscribeMapper subscribeMapper;
@@ -45,6 +50,7 @@ public class EventService {
         storageService.findEventFiles(event.getFilesId());
         var enventDocument = eventMapper.toDocument(event);
         eventRepository.save(enventDocument);
+        notificationService.createNotification(event.getCreatorRegistration(), event.getTitle(), CREATE_EVENT);
     }
 
     public void subscribeEvent(SubscribeEventDTO subscriber) {
@@ -62,6 +68,8 @@ public class EventService {
         userService.validateIfUserAlreadySubscribeInEvent(subscriber.getEventNumber(), subscriber.getRegistration());
 
         subscriberRepository.save(subscribeMapper.toDocument(subscriber));
+
+        notificationService.createNotification(user.getRegistration(), event.get().getTitle(), SUBSCRIBE_EVENT);
     }
 
     public List<EventResponseDTO> listEventsSubscribed(String registration) {
