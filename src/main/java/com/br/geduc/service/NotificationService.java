@@ -11,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 @Slf4j
 public class NotificationService {
+
+    //private static final DateTimeFormatter DATE_TIME_PATTERN = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
 
     private NotificationRepository notificationRepository;
 
@@ -27,7 +31,7 @@ public class NotificationService {
         var document = NotificationDocument.builder()
                 .registration(registration)
                 .notification(getNotification(eventTitle, notificationType))
-                .creationTimeStamp(LocalDateTime.now().toString())
+                .creationTimeStamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")))
                 .status("PENDING")
                 .build();
         this.notificationRepository.save(document);
@@ -52,7 +56,7 @@ public class NotificationService {
         this.notificationRepository.findByRegistrationNotReaded(registration).forEach(document -> {
             listToReturn.add(notificationMapper.toResponse(document));
         });
-
+        listToReturn.sort(Comparator.comparing(e -> LocalDateTime.parse(e.getCreationTimeStamp(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'"))));
         return listToReturn;
     }
 

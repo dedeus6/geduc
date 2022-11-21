@@ -72,6 +72,23 @@ public class EventService {
         notificationService.createNotification(user.getRegistration(), event.get().getTitle(), SUBSCRIBE_EVENT);
     }
 
+    public void unsubscribeEvent(String eventNumber, String registration) {
+        var event = getEventByEventNumber(eventNumber);
+        var user = userService.getUserByRegistration(registration);
+
+        if (event.isEmpty()) {
+            throw new BusinessException(EVENT_NOT_EXISTS);
+        }
+
+        if (Objects.isNull(user)) {
+            throw new BusinessException(USER_NOT_EXIST);
+        }
+
+        var document = subscriberRepository.findByEventNumberAndRegistration(eventNumber, registration);
+
+        subscriberRepository.delete(document);
+    }
+
     public List<EventResponseDTO> listEventsSubscribed(String registration) {
         var documentList = findSubscribeByRegistration(registration);
         var events = new ArrayList<EventResponseDTO>();

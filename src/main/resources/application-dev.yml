@@ -15,5 +15,5 @@ spring:
       database: geduc
     azure:
       container: geduc
-      connection-string: https://geduc.blob.core.windows.net/
-      token: sp=racwdli&st=2022-10-14T19:41:11Z&se=2024-01-01T03:41:11Z&sv=2021-06-08&sr=c&sig=mJLkdTBTOys10OkjdsDzDcTsIQsanVLyy%2FJ7Kj%2BzduE%3D
+      connection-string: https://geduc2.blob.core.windows.net/
+      token: sp=racwdli&st=2022-11-21T16:37:43Z&se=2023-01-18T00:37:43Z&sv=2021-06-08&sr=c&sig=S8qst4FZq4PMvJGzgWkLFn2aZ81kSdWn%2FNahrCkUJbc%3D

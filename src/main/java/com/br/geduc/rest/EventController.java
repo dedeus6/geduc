@@ -54,6 +54,12 @@ public class EventController {
         eventService.subscribeEvent(subscriber);
     }
 
+    @PostMapping(value = "/unsubscribe/{eventNumber}/{registration}")
+    @ResponseStatus(CREATED)
+    public void unsubscribeEvent(@PathVariable("eventNumber") String eventNumber, @PathVariable("registration") String registration) {
+        eventService.unsubscribeEvent(eventNumber, registration);
+    }
+
     @GetMapping(value = "/subscribed/{registration}")
     @ResponseStatus(OK)
     public List<EventResponseDTO> listEventsSubscribed(@PathVariable("registration") String registration) {
