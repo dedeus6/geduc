@@ -103,6 +103,7 @@ public class EventService {
         var document = subscriberRepository.findByEventNumberAndRegistration(eventNumber, registration);
 
         subscriberRepository.delete(document);
+        notificationService.createNotification(registration, event.get().getTitle(), UNSUBSCRIBE_EVENT);
     }
 
     public List<EventResponseDTO> listEventsSubscribed(String registration, String eventNumber) {

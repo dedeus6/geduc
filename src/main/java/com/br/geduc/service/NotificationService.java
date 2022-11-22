@@ -70,6 +70,8 @@ public class NotificationService {
                 return "Você encerrou o evento " + eventTitle + ", logo seu certificado estará disponível.";
             case CANCEL_EVENT:
                 return "O evento " + eventTitle + " foi cancelado.";
+            case UNSUBSCRIBE_EVENT:
+                return "Você cancelou a inscrição no evento " + eventTitle + ".";
             default:
                 return null;
         }

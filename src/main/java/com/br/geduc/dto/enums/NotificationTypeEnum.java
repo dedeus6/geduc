@@ -4,5 +4,6 @@ public enum NotificationTypeEnum {
     SUBSCRIBE_EVENT,
     CREATE_EVENT,
     FINISH_EVENT,
-    CANCEL_EVENT;
+    CANCEL_EVENT,
+    UNSUBSCRIBE_EVENT;
 }
