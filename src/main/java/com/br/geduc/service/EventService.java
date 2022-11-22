@@ -1,8 +1,6 @@
 package com.br.geduc.service;
 
 import com.br.geduc.document.EventDocument;
-import com.br.geduc.document.SubscribeDocument;
-import com.br.geduc.dto.enums.NotificationTypeEnum;
 import com.br.geduc.dto.request.EventRequestDTO;
 import com.br.geduc.dto.request.SubscribeEventDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
@@ -14,7 +12,6 @@ import com.br.geduc.repository.SubscriberRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -89,8 +86,8 @@ public class EventService {
         subscriberRepository.delete(document);
     }
 
-    public List<EventResponseDTO> listEventsSubscribed(String registration) {
-        var documentList = findSubscribeByRegistration(registration);
+    public List<EventResponseDTO> listEventsSubscribed(String registration, String eventNumber) {
+        var documentList = this.subscriberRepository.findSubscriber(registration, eventNumber);
         var events = new ArrayList<EventResponseDTO>();
 
         documentList.forEach(subscribe -> {
@@ -123,9 +120,5 @@ public class EventService {
 
     private Optional<EventDocument> getEventByEventNumber(String eventNumber) {
         return eventRepository.findById(eventNumber);
-    }
-
-    private List<SubscribeDocument> findSubscribeByRegistration(String registration) {
-        return subscriberRepository.findByRegistration(registration);
     }
 }

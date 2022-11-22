@@ -27,6 +27,9 @@ public interface EventRepository extends MongoRepository<EventDocument, String> 
         if (Objects.nonNull(status))
             criteria = criteria.and("status").is(status);
 
+        if (Objects.isNull(status))
+            criteria = criteria.and("status").is("PENDING");
+
         if (Objects.nonNull(creatorRegistration))
             criteria = criteria.and("creatorRegistration").is(creatorRegistration);
 

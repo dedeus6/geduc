@@ -62,7 +62,7 @@ public class EventController {
 
     @GetMapping(value = "/subscribed/{registration}")
     @ResponseStatus(OK)
-    public List<EventResponseDTO> listEventsSubscribed(@PathVariable("registration") String registration) {
-        return eventService.listEventsSubscribed(registration);
+    public List<EventResponseDTO> listEventsSubscribed(@PathVariable("registration") String registration, @RequestParam(required = false) String eventNumber) {
+        return eventService.listEventsSubscribed(registration, eventNumber);
     }
 }
