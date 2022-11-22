@@ -39,7 +39,7 @@ public interface EventRepository extends MongoRepository<EventDocument, String> 
         final var query = new Query(criteria);
 
         if (Objects.nonNull(title))
-            query.addCriteria(Criteria.where("title").regex(title));
+            query.addCriteria(Criteria.where("title").regex(title, "i"));
 
         return SpringContext.getBean(MongoTemplate.class).find(query, EventDocument.class);
 
