@@ -54,6 +54,12 @@ public class EventController {
         eventService.subscribeEvent(subscriber);
     }
 
+    @PostMapping(value = "/cancel/{eventNumber}")
+    @ResponseStatus(CREATED)
+    public void cancelEvent(@PathVariable("eventNumber") String eventNumber) {
+        eventService.cancelEvent(eventNumber);
+    }
+
     @PostMapping(value = "/unsubscribe/{eventNumber}/{registration}")
     @ResponseStatus(CREATED)
     public void unsubscribeEvent(@PathVariable("eventNumber") String eventNumber, @PathVariable("registration") String registration) {

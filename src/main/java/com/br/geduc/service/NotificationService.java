@@ -68,6 +68,8 @@ public class NotificationService {
                 return "Você criou o evento " + eventTitle;
             case FINISH_EVENT:
                 return "Você encerrou o evento " + eventTitle + ", logo seu certificado estará disponível.";
+            case CANCEL_EVENT:
+                return "O evento " + eventTitle + " foi cancelado.";
             default:
                 return null;
         }

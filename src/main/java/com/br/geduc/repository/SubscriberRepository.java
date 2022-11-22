@@ -26,4 +26,6 @@ public interface SubscriberRepository extends MongoRepository<SubscribeDocument,
         return SpringContext.getBean(MongoTemplate.class).find(query, SubscribeDocument.class);
 
     }
+
+    List<SubscribeDocument> findAllSubscibersByEventNumber(String eventNumber);
 }

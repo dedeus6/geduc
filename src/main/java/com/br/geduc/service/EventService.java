@@ -1,6 +1,7 @@
 package com.br.geduc.service;
 
 import com.br.geduc.document.EventDocument;
+import com.br.geduc.dto.enums.EventStatusEnum;
 import com.br.geduc.dto.request.EventRequestDTO;
 import com.br.geduc.dto.request.SubscribeEventDTO;
 import com.br.geduc.dto.response.EventResponseDTO;
@@ -21,8 +22,7 @@ import java.util.stream.Collectors;
 import static com.br.geduc.constants.Errors.EVENT_NOT_EXISTS;
 import static com.br.geduc.constants.Errors.USER_NOT_EXIST;
 import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
-import static com.br.geduc.dto.enums.NotificationTypeEnum.CREATE_EVENT;
-import static com.br.geduc.dto.enums.NotificationTypeEnum.SUBSCRIBE_EVENT;
+import static com.br.geduc.dto.enums.NotificationTypeEnum.*;
 
 @AllArgsConstructor
 @Slf4j
@@ -48,6 +48,27 @@ public class EventService {
         var enventDocument = eventMapper.toDocument(event);
         eventRepository.save(enventDocument);
         notificationService.createNotification(event.getCreatorRegistration(), event.getTitle(), CREATE_EVENT);
+    }
+
+    public void cancelEvent(String eventNumber) {
+        var event = getEventByEventNumber(eventNumber);
+
+        if (event.isEmpty())
+            throw new BusinessException(EVENT_NOT_EXISTS);
+
+        event.get().setStatus(EventStatusEnum.CANCELLED);
+        this.eventRepository.save(event.get());
+
+        var subscibers = this.subscriberRepository.findAllSubscibersByEventNumber(eventNumber);
+
+        if (!subscibers.isEmpty()) {
+            subscibers.forEach(sub -> {
+                this.notificationService.createNotification(sub.getRegistration(), event.get().getTitle(), CANCEL_EVENT);
+                this.subscriberRepository.delete(sub);
+            });
+        }
+
+        this.storageService.deleteFiles(event.get().getFilesId(), null);
     }
 
     public void subscribeEvent(SubscribeEventDTO subscriber) {
