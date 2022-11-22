@@ -67,8 +67,6 @@ public class EventService {
                 this.subscriberRepository.delete(sub);
             });
         }
-
-        this.storageService.deleteFiles(event.get().getFilesId(), null);
     }
 
     public void subscribeEvent(SubscribeEventDTO subscriber) {
