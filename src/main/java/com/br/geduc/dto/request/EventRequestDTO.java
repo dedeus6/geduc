@@ -38,4 +38,5 @@ public class EventRequestDTO {
 
     @NotBlank(message = FILE_ID_IS_REQUIRED)
     private String filesId;
+
 }

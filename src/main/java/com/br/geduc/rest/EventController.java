@@ -27,8 +27,8 @@ public class EventController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public void createEvent(@Valid @RequestBody EventRequestDTO event) {
-        eventService.createEvent(event);
+    public EventResponseDTO createEvent(@Valid @RequestBody EventRequestDTO event) {
+        return eventService.createEvent(event);
     }
 
     @GetMapping

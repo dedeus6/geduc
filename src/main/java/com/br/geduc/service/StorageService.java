@@ -7,6 +7,7 @@ import com.br.geduc.dto.response.FileResponseDTO;
 import com.br.geduc.dto.response.StorageResponseDTO;
 import com.br.geduc.exceptions.BusinessException;
 import com.br.geduc.mapper.FileMapper;
+import com.br.geduc.repository.EventRepository;
 import com.br.geduc.repository.StorageRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,8 @@ public class StorageService {
 
     private StorageRepository storageRepository;
 
+    private EventRepository eventRepository;
+
     private BlobClientBuilder blobClient;
 
     public StorageResponseDTO uploadFiles(List<MultipartFile> files) {
@@ -39,17 +42,42 @@ public class StorageService {
             throw new BusinessException(FILE_LIST_IS_EMPTY);
 
         var document = storageRepository.save(StorageFileDocument.builder().build());
-        asyncUploadFiles(files, document);
+        files.forEach(file -> {
+            asyncUploadFiles(file, document);
+        });
         return StorageResponseDTO.builder()
                 .filesId(document.getId())
                 .build();
     }
+
+    public void uploadThumb(String eventNumber, MultipartFile thumbnail) {
+        var document = storageRepository.save(StorageFileDocument.builder().build());
+        var eventDocument = this.eventRepository.findById(eventNumber);
+
+        eventDocument.ifPresent(value -> {
+            if (Objects.nonNull(value.getThumbId())) {
+                storageRepository.findById(value.getThumbId()).ifPresent(storage -> {
+                    storage.getFiles().forEach(file -> {
+                        deleteFileOnAzure(file.getAzureId());
+                    });
+                    storageRepository.delete(storage);
+                });
+            }
+        });
+
+        asyncUploadFiles(thumbnail, document);
+        eventDocument.ifPresent(value -> value.setThumbId(document.getId()));
+        eventDocument.ifPresent(value ->  this.eventRepository.save(value));
+    }
+
     public StorageResponseDTO updateFiles(String filesId, List<MultipartFile> files) {
         if (files.isEmpty())
             throw new BusinessException(FILE_LIST_IS_EMPTY);
 
         var document = findEventFiles(filesId);
-        asyncUploadFiles(files, document);
+        files.forEach(file -> {
+            asyncUploadFiles(file, document);
+        });
         return StorageResponseDTO.builder()
                 .filesId(document.getId())
                 .build();
@@ -84,11 +112,9 @@ public class StorageService {
     }
 
     @Async
-    private void asyncUploadFiles(List<MultipartFile> files, StorageFileDocument document) {
-        files.forEach(file -> {
-            FileDocument fileDocument = saveFileOnAzure(file);
-            document.getFiles().add(fileDocument);
-        });
+    private void asyncUploadFiles(MultipartFile file, StorageFileDocument document) {
+        FileDocument fileDocument = saveFileOnAzure(file);
+        document.getFiles().add(fileDocument);
 
         document.setFinalUploadDate(LocalDateTime.now());
         storageRepository.save(document);

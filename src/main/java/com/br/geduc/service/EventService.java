@@ -42,12 +42,13 @@ public class EventService {
 
     private SubscribeMapper subscribeMapper;
 
-    public void createEvent(EventRequestDTO event) {
+    public EventResponseDTO createEvent(EventRequestDTO event) {
         event.setStatus(PENDING);
         storageService.findEventFiles(event.getFilesId());
         var enventDocument = eventMapper.toDocument(event);
-        eventRepository.save(enventDocument);
+        var document = eventRepository.save(enventDocument);
         notificationService.createNotification(event.getCreatorRegistration(), event.getTitle(), CREATE_EVENT);
+        return eventMapper.toResponse(document);
     }
 
     public void cancelEvent(String eventNumber) {
@@ -133,9 +134,16 @@ public class EventService {
     }
 
     public List<EventResponseDTO> listEvents(String eventNumber, String creatorRegistration, String status, String title, List<String> techs) {
+        var responseList = new ArrayList<EventResponseDTO>();
         var events = eventRepository.findEvents(eventNumber, creatorRegistration, status, title, techs);
+        events.forEach(event -> {
+            var eventMapper = this.eventMapper.toResponse(event);
+            if (Objects.nonNull(event.getThumbId()))
+                eventMapper.setThumbnail(storageService.getEventFiles(event.getThumbId()));
+            responseList.add(eventMapper);
+        });
 
-        return events.stream().map(event -> eventMapper.toResponse(event)).collect(Collectors.toList());
+        return responseList;
     }
 
     private Optional<EventDocument> getEventByEventNumber(String eventNumber) {

@@ -44,4 +44,7 @@ public class EventDocument {
 
     @Field("filesId")
     private String filesId;
+
+    @Field("thumbId")
+    private String thumbId;
 }

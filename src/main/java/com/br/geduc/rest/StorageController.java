@@ -26,6 +26,12 @@ public class StorageController {
         return service.uploadFiles(files);
     }
 
+    @PostMapping(value = "/thumb/{eventNumber}",consumes = MULTIPART_FORM_DATA)
+    @ResponseStatus(CREATED)
+    public void uploadThumb(@PathVariable String eventNumber, @RequestParam MultipartFile thumbnail) {
+        service.uploadThumb(eventNumber, thumbnail);
+    }
+
     @PutMapping(value = "/{filesId}", consumes = MULTIPART_FORM_DATA)
     @ResponseStatus(CREATED)
     public StorageResponseDTO update(@PathVariable String filesId, @RequestParam List<MultipartFile> files) {
