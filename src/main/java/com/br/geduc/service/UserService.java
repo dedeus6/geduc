@@ -4,6 +4,7 @@ import com.br.geduc.document.UserDocument;
 import com.br.geduc.dto.request.UserAuthRequestDTO;
 import com.br.geduc.dto.request.UserRequestDTO;
 import com.br.geduc.dto.request.UserUpdateRequestDTO;
+import com.br.geduc.dto.response.StorageResponseDTO;
 import com.br.geduc.dto.response.UserResponseDTO;
 import com.br.geduc.exceptions.BusinessException;
 import com.br.geduc.mapper.UserMapper;
@@ -24,6 +25,8 @@ public class UserService {
 
     private UserMapper userMapper;
 
+    private StorageService storageService;
+
     private SubscriberRepository subscriberRepository;
 
     public void createUser(UserRequestDTO user) {
@@ -41,19 +44,25 @@ public class UserService {
     }
 
     public UserResponseDTO authUser(UserAuthRequestDTO userRequest) {
-        var user = getUserByRegistration(userRequest.getRegistration());
+        var user = this.userRepository.findByRegistration(userRequest.getRegistration());
 
-        if (Objects.isNull(user))
+        if (user.isEmpty())
             throw new BusinessException(USER_NOT_EXIST);
 
-        if (!user.getPassword().equals(userRequest.getPassword()))
+        if (!user.get().getPassword().equals(userRequest.getPassword()))
             throw new BusinessException(INVALID_PASSWORD);
 
-        return user;
+        var userDTO = this.userMapper.toResponse(user.get());
+
+        if (Objects.nonNull(user.get().getAvatarId()))
+            userDTO.setAvatar(storageService.getFile(user.get().getAvatarId()));
+
+        return userDTO;
     }
 
     public UserResponseDTO getUserByRegistration(String registration) {
-        return userRepository.findByRegistration(registration);
+        var user = userRepository.findByRegistration(registration);
+        return user.map(userDocument -> userMapper.toResponse(userDocument)).orElse(null);
     }
 
     protected void validateIfUserAlreadySubscribeInEvent(String eventNumber, String registration) {
@@ -86,9 +95,21 @@ public class UserService {
 
     public UserResponseDTO getUser(String registration) {
         var user = userRepository.findByRegistration(registration);
-        if (Objects.isNull(user))
+
+        if (user.isEmpty())
             throw new BusinessException(USER_NOT_EXIST);
-        return user;
+
+        var userDTO = userMapper.toResponse(user.get());
+
+        if (Objects.nonNull(user.get().getAvatarId()))
+            userDTO.setAvatar(getAvatar(user.get().getAvatarId()));
+
+        return userDTO;
+
+    }
+
+    private StorageResponseDTO getAvatar(String avatarId) {
+        return storageService.getFile(avatarId);
     }
 
     private UserResponseDTO getUserByEmail(String email) {

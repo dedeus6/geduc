@@ -139,7 +139,7 @@ public class EventService {
         events.forEach(event -> {
             var eventMapper = this.eventMapper.toResponse(event);
             if (Objects.nonNull(event.getThumbId()))
-                eventMapper.setThumbnail(storageService.getEventFiles(event.getThumbId()));
+                eventMapper.setThumbnail(storageService.getFile(event.getThumbId()));
             responseList.add(eventMapper);
         });
 

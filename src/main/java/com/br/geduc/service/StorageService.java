@@ -9,6 +9,7 @@ import com.br.geduc.exceptions.BusinessException;
 import com.br.geduc.mapper.FileMapper;
 import com.br.geduc.repository.EventRepository;
 import com.br.geduc.repository.StorageRepository;
+import com.br.geduc.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -34,6 +35,8 @@ public class StorageService {
     private StorageRepository storageRepository;
 
     private EventRepository eventRepository;
+
+    private UserRepository userRepository;
 
     private BlobClientBuilder blobClient;
 
@@ -68,6 +71,26 @@ public class StorageService {
         asyncUploadFiles(thumbnail, document);
         eventDocument.ifPresent(value -> value.setThumbId(document.getId()));
         eventDocument.ifPresent(value ->  this.eventRepository.save(value));
+    }
+
+    public void uploadAvatar(String registration, MultipartFile avatar) {
+        var document = storageRepository.save(StorageFileDocument.builder().build());
+        var userDocument = this.userRepository.findByRegistration(registration);
+
+        userDocument.ifPresent(value -> {
+            if (Objects.nonNull(value.getAvatarId())) {
+                storageRepository.findById(value.getAvatarId()).ifPresent(storage -> {
+                    storage.getFiles().forEach(file -> {
+                        deleteFileOnAzure(file.getAzureId());
+                    });
+                    storageRepository.delete(storage);
+                });
+            }
+        });
+
+        asyncUploadFiles(avatar, document);
+        userDocument.ifPresent(value -> value.setAvatarId(document.getId()));
+        userDocument.ifPresent(value ->  this.userRepository.save(value));
     }
 
     public StorageResponseDTO updateFiles(String filesId, List<MultipartFile> files) {
@@ -120,7 +143,7 @@ public class StorageService {
         storageRepository.save(document);
     }
 
-    public StorageResponseDTO getEventFiles(String filesId) {
+    public StorageResponseDTO getFile(String filesId) {
         var document = findEventFiles(filesId);
 
         if (Objects.isNull(document.getFinalUploadDate()))

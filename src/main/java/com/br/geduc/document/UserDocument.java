@@ -38,4 +38,7 @@ public class UserDocument {
 
     @Field("techs")
     private Set<String> techs;
+
+    @Field("avatarId")
+    private String avatarId;
 }

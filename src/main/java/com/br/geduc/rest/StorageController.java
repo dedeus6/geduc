@@ -32,6 +32,12 @@ public class StorageController {
         service.uploadThumb(eventNumber, thumbnail);
     }
 
+    @PostMapping(value = "/avatar/{registration}",consumes = MULTIPART_FORM_DATA)
+    @ResponseStatus(CREATED)
+    public void uploadAvatar(@PathVariable String registration, @RequestParam MultipartFile avatar) {
+        service.uploadAvatar(registration, avatar);
+    }
+
     @PutMapping(value = "/{filesId}", consumes = MULTIPART_FORM_DATA)
     @ResponseStatus(CREATED)
     public StorageResponseDTO update(@PathVariable String filesId, @RequestParam List<MultipartFile> files) {
@@ -41,7 +47,7 @@ public class StorageController {
     @GetMapping("/{filesId}")
     @ResponseStatus(OK)
     public StorageResponseDTO getById(@PathVariable String filesId) {
-        return service.getEventFiles(filesId);
+        return service.getFile(filesId);
     }
 
     @DeleteMapping("/{filesId}")

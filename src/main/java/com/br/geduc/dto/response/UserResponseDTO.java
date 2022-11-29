@@ -23,4 +23,5 @@ public class UserResponseDTO {
     @JsonIgnore
     private Boolean isAdmin;
     private Set<String> techs;
+    private StorageResponseDTO avatar;
 }

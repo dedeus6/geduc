@@ -20,10 +20,11 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
     @Bean
-    public UserService userService(UserRepository userRepository, SubscriberRepository subscriberRepository) {
+    public UserService userService(UserRepository userRepository, StorageService storageService, SubscriberRepository subscriberRepository) {
         return new UserService(
                 userRepository,
                 new UserMapper(new ModelMapper()),
+                storageService,
                 subscriberRepository
         );
     }
