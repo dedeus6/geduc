@@ -41,7 +41,7 @@ public class CertificateService {
 
         var certificate = this.certificateRepository.findByRegistrationAndEventNumber(registration, eventNumber);
 
-        if (Objects.isNull(certificate))
+        if (Objects.nonNull(certificate))
             throw new BusinessException(CERTIFICATE_ALREADY_DONE);
 
         var document = CertificateDocument.builder()
