@@ -19,8 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.br.geduc.constants.Errors.EVENT_NOT_EXISTS;
-import static com.br.geduc.constants.Errors.USER_NOT_EXIST;
+import static com.br.geduc.constants.Errors.*;
 import static com.br.geduc.dto.enums.EventStatusEnum.PENDING;
 import static com.br.geduc.dto.enums.NotificationTypeEnum.*;
 
@@ -81,6 +80,9 @@ public class EventService {
         if (Objects.isNull(user)) {
             throw new BusinessException(USER_NOT_EXIST);
         }
+
+        if (Objects.equals(event.get().getStatus(), EventStatusEnum.CANCELLED))
+            throw new BusinessException(EVENT_CANCELLED);
 
         userService.validateIfUserAlreadySubscribeInEvent(subscriber.getEventNumber(), subscriber.getRegistration());
 

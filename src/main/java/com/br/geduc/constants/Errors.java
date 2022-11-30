@@ -9,6 +9,8 @@ public class Errors {
 
     public static final String USER_ALREADY_EXIST = "Usuário já existe.";
     public static final String USER_NOT_EXIST = "Usuário não existe.";
+    public static final String EVENT_CANCELLED = "Não é possível se inscrever neste evento, pois ele está cancelado.";
+    public static final String EVENT_OWNER_CANT_GENERATE_CERTIFICATE = "Você não pode ter um certificado do seu próprio evento.";
     public static final String INVALID_PASSWORD = "Senha incorreta.";
     public static final String EMAIL_ALREADY_USE = "Email já em uso.";
     public static final String REGISTRATION_IS_REQUIRED = "Matrícula é obrigatório.";
