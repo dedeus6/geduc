@@ -146,7 +146,7 @@ public class EventService {
         return responseList;
     }
 
-    private Optional<EventDocument> getEventByEventNumber(String eventNumber) {
+    public Optional<EventDocument> getEventByEventNumber(String eventNumber) {
         return eventRepository.findById(eventNumber);
     }
 }

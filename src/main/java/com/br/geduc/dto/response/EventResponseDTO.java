@@ -2,7 +2,6 @@ package com.br.geduc.dto.response;
 
 import com.br.geduc.dto.enums.EventStatusEnum;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
