@@ -36,7 +36,7 @@ public class UserService {
 
         var userByEmail = getUserByEmail(user.getEmail());
         if (!Objects.isNull(userByEmail))
-            throw new BusinessException(EMAIL_ALREADY_USE);
+            throw new BusinessException(USER_ALREADY_EXIST);
 
         var userDocument = userMapper.toDocument(user);
         userDocument.setIsAdmin(false);
