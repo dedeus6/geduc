@@ -2,6 +2,7 @@ package com.br.geduc.rest;
 
 
 import com.br.geduc.constants.Errors;
+import com.br.geduc.dto.request.PasswordUpdateRequestDTO;
 import com.br.geduc.dto.request.UserAuthRequestDTO;
 import com.br.geduc.dto.request.UserRequestDTO;
 import com.br.geduc.dto.request.UserUpdateRequestDTO;
@@ -53,6 +54,12 @@ public class UserController {
     public UserResponseDTO updateUser(@PathVariable("registration") String registration,
                                       @Valid @RequestBody UserUpdateRequestDTO user) {
         return userService.updateUser(registration, user);
+    }
+
+    @PutMapping(path = "/change/password")
+    @ResponseStatus(OK)
+    public void changePassword(@Valid @RequestBody PasswordUpdateRequestDTO user) {
+        userService.changePassword(user);
     }
 
 }

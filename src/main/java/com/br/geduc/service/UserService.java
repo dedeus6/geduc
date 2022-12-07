@@ -1,6 +1,7 @@
 package com.br.geduc.service;
 
 import com.br.geduc.document.UserDocument;
+import com.br.geduc.dto.request.PasswordUpdateRequestDTO;
 import com.br.geduc.dto.request.UserAuthRequestDTO;
 import com.br.geduc.dto.request.UserRequestDTO;
 import com.br.geduc.dto.request.UserUpdateRequestDTO;
@@ -63,6 +64,26 @@ public class UserService {
     public UserResponseDTO getUserByRegistration(String registration) {
         var user = userRepository.findByRegistration(registration);
         return user.map(userDocument -> userMapper.toResponse(userDocument)).orElse(null);
+    }
+
+    public void changePassword(PasswordUpdateRequestDTO user) {
+        var getUser = this.userRepository.findByRegistrationAndEmail(user.getRegistration(), user.getEmail());
+
+        if (getUser.isEmpty())
+            throw new BusinessException(USER_NOT_EXIST);
+
+        var document = UserDocument.builder()
+                .id(getUser.get().getId())
+                .registration(getUser.get().getRegistration())
+                .name(getUser.get().getName())
+                .email(getUser.get().getEmail())
+                .password(user.getPassword())
+                .isAdmin(getUser.get().getIsAdmin())
+                .techs(getUser.get().getTechs())
+                .avatarId(Objects.nonNull(getUser.get().getAvatarId()) ? getUser.get().getAvatarId() : null)
+                .build();
+
+        this.userRepository.save(document);
     }
 
     protected void validateIfUserAlreadySubscribeInEvent(String eventNumber, String registration) {

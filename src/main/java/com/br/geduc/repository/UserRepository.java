@@ -13,4 +13,6 @@ public interface UserRepository extends MongoRepository<UserDocument, String> {
     Optional<UserDocument> findByRegistration(String registration);
     UserResponseDTO findByEmail(String email);
 
+    Optional<UserDocument> findByRegistrationAndEmail(String registration, String email);
+
 }
