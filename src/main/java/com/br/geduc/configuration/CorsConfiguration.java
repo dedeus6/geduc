@@ -11,7 +11,7 @@ public class CorsConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("https://geduc.netlify.app/")
-                .allowedOrigins("http://localhost:8080/");
+                .allowedOrigins("http://localhost:4200/");
     }
 
 }
